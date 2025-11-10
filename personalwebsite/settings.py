@@ -81,24 +81,42 @@ WSGI_APPLICATION = 'personalwebsite.wsgi.application'
 # Supports both individual env vars and DATABASE_URL (Render provides this)
 import os
 
-DATABASES = {
-    'default': {
-        'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
-        'NAME': config('DB_NAME', default='personalwebsite'),
-        'USER': config('DB_USER', default='postgres'),
-        'PASSWORD': config('DB_PASSWORD', default='postgres'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='5432'),
-    }
-}
-
-# Use DATABASE_URL if provided (Render auto-generates this when database is linked)
-if 'DATABASE_URL' in os.environ:
+# Try DATABASE_URL first (Render auto-generates this when database is linked)
+database_url = os.environ.get('DATABASE_URL', '').strip()
+if database_url:
     import dj_database_url
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    # Check if PostgreSQL is explicitly configured via environment variables
+    db_engine = config('DB_ENGINE', default=None)
+    db_name = config('DB_NAME', default=None)
+    
+    # If DB_ENGINE or DB_NAME is explicitly set, use PostgreSQL
+    # Otherwise, default to SQLite for local development
+    if db_engine or db_name:
+        DATABASES = {
+            'default': {
+                'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
+                'NAME': config('DB_NAME', default='personalwebsite'),
+                'USER': config('DB_USER', default='postgres'),
+                'PASSWORD': config('DB_PASSWORD', default='postgres'),
+                'HOST': config('DB_HOST', default='localhost'),
+                'PORT': config('DB_PORT', default='5432'),
+            }
+        }
+    else:
+        # Default to SQLite for local development
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
+        }
 
 
 # Password validation
