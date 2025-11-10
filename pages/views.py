@@ -1,6 +1,15 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponseForbidden
 from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from .models import Project, Skill, Experience, ContactMessage
+from .forms import ExperienceForm
+
+def is_admin(user):
+    """Check if user is admin (not guest)"""
+    return user.is_authenticated and user.username != 'guest' and (user.is_staff or user.is_superuser)
 
 def home(request):
     """Home page view"""
@@ -14,33 +23,17 @@ def home(request):
 
 def about(request):
     """About page view"""
+    # Get skills and experience from database
+    skills = Skill.objects.all()
+    experience = Experience.objects.all()
+    
     context = {
         'title': 'About Me',
         'name': 'Jai Ohri',
         'tagline': 'Developer, Designer, and Problem Solver',
         'about': 'I am passionate about creating innovative solutions and building meaningful digital experiences.',
-        'skills': [
-            {'name': 'Python', 'icon': '🐍', 'level': 90},
-            {'name': 'Django', 'icon': '🎯', 'level': 85},
-            {'name': 'React', 'icon': '⚛️', 'level': 80},
-            {'name': 'JavaScript', 'icon': '💎', 'level': 85},
-            {'name': 'HTML/CSS', 'icon': '🎨', 'level': 90},
-            {'name': 'PostgreSQL', 'icon': '🐘', 'level': 75},
-        ],
-        'experience': [
-            {
-                'title': 'Full Stack Developer',
-                'company': 'Tech Company',
-                'period': '2022 - Present',
-                'description': 'Developing web applications using Django, React, and modern web technologies.'
-            },
-            {
-                'title': 'Frontend Developer',
-                'company': 'Startup Inc',
-                'period': '2020 - 2022',
-                'description': 'Created responsive user interfaces and improved user experience across multiple platforms.'
-            }
-        ]
+        'skills': skills,
+        'experience': experience,
     }
     
     # Check if request is HTMX
@@ -51,43 +44,15 @@ def about(request):
 
 def portfolio(request):
     """Portfolio page view"""
+    # Get projects from database
+    projects = Project.objects.all()
+    featured_project = Project.objects.filter(featured=True).first()
+    
     context = {
         'title': 'My Portfolio',
         'name': 'Jai Ohri',
-        'projects': [
-            {
-                'title': 'E-commerce Platform',
-                'description': 'A full-stack e-commerce solution built with Django and React',
-                'technologies': ['Django', 'React', 'PostgreSQL', 'Stripe'],
-                'image': 'https://via.placeholder.com/400x300/4F46E5/FFFFFF?text=E-commerce+Platform',
-                'github_url': '#',
-                'live_url': '#'
-            },
-            {
-                'title': 'Task Management App',
-                'description': 'A collaborative task management application with real-time updates',
-                'technologies': ['Django', 'WebSockets', 'JavaScript', 'Bootstrap'],
-                'image': 'https://via.placeholder.com/400x300/10B981/FFFFFF?text=Task+Management',
-                'github_url': '#',
-                'live_url': '#'
-            },
-            {
-                'title': 'Weather Dashboard',
-                'description': 'A responsive weather dashboard with location-based forecasts',
-                'technologies': ['React', 'API Integration', 'Chart.js', 'CSS3'],
-                'image': 'https://via.placeholder.com/400x300/F59E0B/FFFFFF?text=Weather+Dashboard',
-                'github_url': '#',
-                'live_url': '#'
-            },
-            {
-                'title': 'Blog Platform',
-                'description': 'A content management system with rich text editing capabilities',
-                'technologies': ['Django', 'Django REST Framework', 'Vue.js', 'PostgreSQL'],
-                'image': 'https://via.placeholder.com/400x300/EF4444/FFFFFF?text=Blog+Platform',
-                'github_url': '#',
-                'live_url': '#'
-            }
-        ]
+        'projects': projects,
+        'featured_project': featured_project,
     }
     
     # Check if request is HTMX
@@ -118,8 +83,14 @@ def contact(request):
         subject = request.POST.get('subject')
         message = request.POST.get('message')
         
-        # Here you would typically save to database or send email
-        # For now, we'll just return a success message
+        # Save to database
+        if name and email and subject and message:
+            ContactMessage.objects.create(
+                name=name,
+                email=email,
+                subject=subject,
+                message=message
+            )
         
         if request.headers.get('HX-Request'):
             return render(request, 'pages/contact_success.html', {
@@ -133,3 +104,74 @@ def contact(request):
         return render(request, 'pages/contact_content.html', context)
     
     return render(request, 'pages/contact.html', context)
+
+def add_experience(request):
+    """Add a new experience entry - Admin only"""
+    # Check if user is admin, redirect to login if not
+    if not is_admin(request.user):
+        messages.warning(request, 'You must be logged in as admin to add experiences.')
+        return redirect('pages:login')
+    if request.method == 'POST':
+        form = ExperienceForm(request.POST, request.FILES)
+        if form.is_valid():
+            experience = form.save()
+            messages.success(request, f'Experience "{experience.title} at {experience.company}" added successfully!')
+            return redirect('pages:experiences')
+    else:
+        form = ExperienceForm()
+    
+    context = {
+        'title': 'Add Experience',
+        'name': 'Jai Ohri',
+        'form': form,
+    }
+    return render(request, 'pages/add_experience.html', context)
+
+def experiences(request):
+    """List all experience entries - Admin only"""
+    # Check if user is admin, redirect to login if not
+    if not is_admin(request.user):
+        messages.warning(request, 'You must be logged in as admin to edit experiences.')
+        return redirect('pages:login')
+    
+    experiences_list = Experience.objects.all()
+    
+    context = {
+        'title': 'Edit Experiences',
+        'name': 'Jai Ohri',
+        'experiences': experiences_list,
+        'is_admin': is_admin(request.user),
+    }
+    return render(request, 'pages/experiences.html', context)
+
+def login_view(request):
+    """Admin login page"""
+    if request.user.is_authenticated and is_admin(request.user):
+        return redirect('pages:home')
+    
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, f'Welcome back, {user.username}!')
+            next_url = request.GET.get('next', None)
+            if next_url:
+                return redirect(next_url)
+            return redirect('pages:home')
+    else:
+        form = AuthenticationForm()
+    
+    context = {
+        'title': 'Admin Login',
+        'name': 'Jai Ohri',
+        'form': form,
+    }
+    return render(request, 'pages/login.html', context)
+
+@login_required
+def logout_view(request):
+    """Logout and redirect to home"""
+    logout(request)
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('pages:home')
