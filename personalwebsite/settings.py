@@ -77,6 +77,10 @@ WSGI_APPLICATION = 'personalwebsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Database configuration
+# Supports both individual env vars and DATABASE_URL (Render provides this)
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
@@ -87,6 +91,14 @@ DATABASES = {
         'PORT': config('DB_PORT', default='5432'),
     }
 }
+
+# Use DATABASE_URL if provided (Render auto-generates this when database is linked)
+if 'DATABASE_URL' in os.environ:
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 
 
 # Password validation
