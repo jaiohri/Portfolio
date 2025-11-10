@@ -1,0 +1,127 @@
+{% extends 'base/index.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="text-center text-white py-24 px-4">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-6xl font-light mb-4 text-white">{{ title }}</h1>
+        <div class="text-xl md:text-2xl mb-8 opacity-90 text-white">Add a new work experience to your portfolio</div>
+    </div>
+</section>
+
+<!-- Form Section -->
+<section class="py-16 px-4">
+    <div class="max-w-3xl mx-auto">
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8">
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                <div class="mb-6 p-4 bg-yellow-300/20 border border-yellow-300/50 rounded-lg text-yellow-300">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Title -->
+                <div>
+                    <label for="{{ form.title.id_for_label }}" class="block text-white font-medium mb-2">
+                        {{ form.title.label }}
+                    </label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="mt-1 text-red-400 text-sm">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <label for="{{ form.company.id_for_label }}" class="block text-white font-medium mb-2">
+                        {{ form.company.label }}
+                    </label>
+                    {{ form.company }}
+                    {% if form.company.errors %}
+                        <div class="mt-1 text-red-400 text-sm">{{ form.company.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Image -->
+                <div>
+                    <label for="{{ form.image.id_for_label }}" class="block text-white font-medium mb-2">
+                        {{ form.image.label }}
+                    </label>
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                        <div class="mt-1 text-red-400 text-sm">{{ form.image.errors }}</div>
+                    {% endif %}
+                    <p class="mt-1 text-gray-400 text-sm">Upload a company logo or image related to this experience (optional)</p>
+                </div>
+
+                <!-- Dates -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.start_date.id_for_label }}" class="block text-white font-medium mb-2">
+                            {{ form.start_date.label }}
+                        </label>
+                        {{ form.start_date }}
+                        {% if form.start_date.errors %}
+                            <div class="mt-1 text-red-400 text-sm">{{ form.start_date.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="{{ form.end_date.id_for_label }}" class="block text-white font-medium mb-2">
+                            {{ form.end_date.label }}
+                        </label>
+                        {{ form.end_date }}
+                        {% if form.end_date.errors %}
+                            <div class="mt-1 text-red-400 text-sm">{{ form.end_date.errors }}</div>
+                        {% endif %}
+                        <p class="mt-1 text-gray-400 text-sm">Leave blank if this is your current position</p>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-white font-medium mb-2">
+                        {{ form.description.label }}
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="mt-1 text-red-400 text-sm">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Display Order -->
+                <div>
+                    <label for="{{ form.display_order.id_for_label }}" class="block text-white font-medium mb-2">
+                        {{ form.display_order.label }}
+                    </label>
+                    {{ form.display_order }}
+                    {% if form.display_order.errors %}
+                        <div class="mt-1 text-red-400 text-sm">{{ form.display_order.errors }}</div>
+                    {% endif %}
+                    <p class="mt-1 text-gray-400 text-sm">Lower numbers appear first. Default is 0.</p>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex gap-4 pt-4">
+                    <button type="submit" class="flex-1 bg-yellow-300 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-200 transition-all duration-300 hover:-translate-y-1">
+                        Add Experience
+                    </button>
+                    <a href="{% url 'pages:experiences' %}" class="flex-1 border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300 text-center">
+                        View All Experiences
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}{% endblock %}
+

@@ -14,4 +14,14 @@
   100% {background-position:50%,25px 25px}
 }
 
+/* Date Input Styling for Dark Theme */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
 
