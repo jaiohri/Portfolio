@@ -10,7 +10,7 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: personalwebsite.onrender.com
+        value: portfolio-5mup.onrender.com
     # Database connection via DATABASE_URL (auto-generated when database is linked)
     databases:
       - name: personalwebsite-db

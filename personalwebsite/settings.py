@@ -26,7 +26,12 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-&%us*3@6nk4=s*_&$zzb*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() for s in v.split(',') if s.strip()])
+# Allow any Render subdomain if ALLOWED_HOSTS is not set
+_allowed_hosts = config('ALLOWED_HOSTS', default='', cast=lambda v: [s.strip() for s in v.split(',') if s.strip()])
+if not _allowed_hosts:
+    # Default to localhost for development
+    _allowed_hosts = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = _allowed_hosts
 
 
 # Application definition
