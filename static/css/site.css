@@ -137,4 +137,110 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-bottom: 2em;
 }
 
+/* Cursor Trail Styles - Canvas-based, no CSS needed */
+
+/* Enhanced Hover Effects */
+a, button, [role="button"] {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Link hover glow effect */
+a:hover, button:hover, [role="button"]:hover {
+  text-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Navigation links enhanced hover */
+nav a {
+  position: relative;
+  overflow: hidden;
+}
+
+nav a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fde047, #facc15);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(253, 224, 71, 0.6);
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+
+/* Card/container hover effects */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(253, 224, 71, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Button hover effects */
+button, .btn {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after, .btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(253, 224, 71, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:hover::after, .btn:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Image hover effects */
+img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 0 10px rgba(253, 224, 71, 0.4));
+}
+
+/* Input field hover effects */
+input, textarea, select {
+  transition: all 0.3s ease;
+}
+
+input:hover, textarea:hover, select:hover {
+  box-shadow: 0 0 0 2px rgba(253, 224, 71, 0.3);
+}
+
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 3px rgba(253, 224, 71, 0.4);
+  outline: none;
+}
+
+/* Smooth cursor for interactive elements */
+a, button, input, textarea, select, [role="button"], [tabindex] {
+  cursor: pointer;
+}
+
+/* Disable cursor trail on mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  #cursor-trail {
+    display: none;
+  }
+}
+
 
