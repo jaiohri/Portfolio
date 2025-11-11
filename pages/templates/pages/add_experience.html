@@ -94,6 +94,7 @@
                     {% if form.description.errors %}
                         <div class="mt-1 text-red-400 text-sm">{{ form.description.errors }}</div>
                     {% endif %}
+                    <p class="mt-1 text-gray-400 text-sm">Supports Markdown: <code class="text-xs">**bold**</code>, <code class="text-xs">*italic*</code>, <code class="text-xs">- lists</code>, etc.</p>
                 </div>
 
                 <!-- Display Order -->
@@ -123,5 +124,23 @@
 </section>
 {% endblock %}
 
-{% block extra_js %}{% endblock %}
+{% block extra_js %}
+<script>
+    // Auto-expand textarea for description field
+    document.addEventListener('DOMContentLoaded', function() {
+        const descriptionTextarea = document.getElementById('{{ form.description.id_for_label }}');
+        if (descriptionTextarea) {
+            // Set initial height
+            descriptionTextarea.style.height = 'auto';
+            descriptionTextarea.style.height = (descriptionTextarea.scrollHeight) + 'px';
+            
+            // Auto-resize on input
+            descriptionTextarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        }
+    });
+</script>
+{% endblock %}
 

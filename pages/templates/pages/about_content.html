@@ -1,3 +1,4 @@
+{% load markdown_filter %}
 <!-- Skills Section -->
 <section class="py-16 px-4">
     <div class="max-w-6xl mx-auto text-center text-white">
@@ -36,7 +37,7 @@
                             <span class="text-lg opacity-80">{{ exp.period }}</span>
                         </div>
                         <div class="text-xl font-medium mb-2">{{ exp.company }}</div>
-                        <p class="opacity-90">{{ exp.description }}</p>
+                        <div class="opacity-90 prose prose-invert prose-yellow max-w-none">{{ exp.description|markdown }}</div>
                     </div>
                 </div>
             </div>
