@@ -144,6 +144,53 @@ def experiences(request):
     }
     return render(request, 'pages/experiences.html', context)
 
+def edit_experience(request, experience_id):
+    """Edit an existing experience entry - Admin only"""
+    # Check if user is admin, redirect to login if not
+    if not is_admin(request.user):
+        messages.warning(request, 'You must be logged in as admin to edit experiences.')
+        return redirect('pages:login')
+    
+    try:
+        experience = Experience.objects.get(id=experience_id)
+    except Experience.DoesNotExist:
+        messages.error(request, 'Experience not found.')
+        return redirect('pages:experiences')
+    
+    if request.method == 'POST':
+        form = ExperienceForm(request.POST, request.FILES, instance=experience)
+        if form.is_valid():
+            experience = form.save()
+            messages.success(request, f'Experience "{experience.title} at {experience.company}" updated successfully!')
+            return redirect('pages:experiences')
+    else:
+        form = ExperienceForm(instance=experience)
+    
+    context = {
+        'title': 'Edit Experience',
+        'name': 'Jai Ohri',
+        'form': form,
+        'experience': experience,
+    }
+    return render(request, 'pages/edit_experience.html', context)
+
+def delete_experience(request, experience_id):
+    """Delete an experience entry - Admin only"""
+    # Check if user is admin, redirect to login if not
+    if not is_admin(request.user):
+        messages.warning(request, 'You must be logged in as admin to delete experiences.')
+        return redirect('pages:login')
+    
+    try:
+        experience = Experience.objects.get(id=experience_id)
+        experience_title = f"{experience.title} at {experience.company}"
+        experience.delete()
+        messages.success(request, f'Experience "{experience_title}" deleted successfully!')
+    except Experience.DoesNotExist:
+        messages.error(request, 'Experience not found.')
+    
+    return redirect('pages:experiences')
+
 def login_view(request):
     """Admin login page"""
     if request.user.is_authenticated and is_admin(request.user):

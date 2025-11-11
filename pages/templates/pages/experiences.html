@@ -27,15 +27,11 @@
             {% for exp in experiences %}
             <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl text-white hover:bg-white/20 transition-all duration-300">
                 <div class="flex flex-col md:flex-row gap-6">
+                    {% if exp.image %}
                     <div class="flex-shrink-0">
-                        {% if exp.image %}
                         <img src="{{ exp.image.url }}" alt="{{ exp.company }}" class="w-32 h-32 object-cover rounded-lg">
-                        {% else %}
-                        <div class="w-32 h-32 bg-gray-700 rounded-lg flex items-center justify-center text-gray-500 text-xs text-center p-2">
-                            No Image
-                        </div>
-                        {% endif %}
                     </div>
+                    {% endif %}
                     <div class="flex-1">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                             <div>
@@ -48,13 +44,25 @@
                             </div>
                         </div>
                         <p class="opacity-90 mb-4">{{ exp.description }}</p>
-                        <div class="flex gap-4 text-sm">
-                            <span class="px-3 py-1 bg-yellow-300/20 rounded-full">
-                                {% if exp.is_current %}Current Position{% else %}Past Position{% endif %}
-                            </span>
-                            <span class="px-3 py-1 bg-white/10 rounded-full">
-                                Created: {{ exp.created_at|date:"M d, Y" }}
-                            </span>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex gap-4 text-sm">
+                                <span class="px-3 py-1 bg-yellow-300/20 rounded-full">
+                                    {% if exp.is_current %}Current Position{% else %}Past Position{% endif %}
+                                </span>
+                                <span class="px-3 py-1 bg-white/10 rounded-full">
+                                    Created: {{ exp.created_at|date:"M d, Y" }}
+                                </span>
+                            </div>
+                            <div class="flex gap-3">
+                                <a href="{% url 'pages:edit_experience' exp.id %}" class="bg-yellow-300 text-gray-900 px-6 py-2 rounded-lg font-semibold hover:bg-yellow-200 transition-all duration-300 text-sm">
+                                    Edit
+                                </a>
+                                <a href="{% url 'pages:delete_experience' exp.id %}" 
+                                   onclick="return confirm('Are you sure you want to delete this experience? This action cannot be undone.');"
+                                   class="bg-red-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-700 transition-all duration-300 text-sm">
+                                    Delete
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

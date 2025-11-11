@@ -80,8 +80,8 @@ class Experience(models.Model):
     def period(self):
         """Format period string for display"""
         if self.end_date:
-            return f"{self.start_date.strftime('%Y')} - {self.end_date.strftime('%Y')}"
-        return f"{self.start_date.strftime('%Y')} - Present"
+            return f"{self.start_date.strftime('%B %Y')} - {self.end_date.strftime('%B %Y')}"
+        return f"{self.start_date.strftime('%B %Y')} - Present"
     
     @property
     def is_current(self):
