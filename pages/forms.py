@@ -29,9 +29,9 @@ class ExperienceForm(forms.ModelForm):
                 'class': 'w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent'
             }),
             'description': forms.Textarea(attrs={
-                'class': 'w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent resize-none',
+                'class': 'w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent resize-y min-h-[120px]',
                 'rows': 5,
-                'placeholder': 'Describe your role and achievements...'
+                'placeholder': 'Describe your role and achievements... (Markdown supported: **bold**, *italic*, - lists, etc.)'
             }),
             'display_order': forms.NumberInput(attrs={
                 'class': 'w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent',
