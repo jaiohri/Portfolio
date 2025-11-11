@@ -12,4 +12,5 @@ urlpatterns = [
     path('experiences/add/', views.add_experience, name='add_experience'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('favicon.ico', views.favicon, name='favicon'),
 ]
