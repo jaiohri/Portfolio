@@ -25,15 +25,11 @@
             {% for exp in experience %}
             <div class="bg-white/10 p-8 rounded-2xl text-white hover:bg-white/20 transition-all duration-300">
                 <div class="flex flex-col md:flex-row gap-6">
+                    {% if exp.image %}
                     <div class="flex-shrink-0">
-                        {% if exp.image %}
                         <img src="{{ exp.image.url }}" alt="{{ exp.company }}" class="w-24 h-24 object-cover rounded-lg">
-                        {% else %}
-                        <div class="w-24 h-24 bg-gray-700 rounded-lg flex items-center justify-center text-gray-500 text-xs text-center p-2">
-                            No Image
-                        </div>
-                        {% endif %}
                     </div>
+                    {% endif %}
                     <div class="flex-1">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                             <h3 class="text-2xl font-semibold text-yellow-300">{{ exp.title }}</h3>
