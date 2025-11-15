@@ -76,6 +76,16 @@
             return;
         }
         
+        // Disable on mobile/touch devices
+        const isMobile = 'ontouchstart' in window || 
+                        navigator.maxTouchPoints > 0 || 
+                        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            console.log('Mobile device detected, cursor effect skipped.');
+            return;
+        }
+        
         canvas = document.createElement('canvas');
         context = canvas.getContext('2d');
         canvas.style.position = 'fixed';
