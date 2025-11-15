@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Loader styles */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 40px;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(farthest-side,#000 90%,#0000) 50%/8px 8px no-repeat,
+    conic-gradient(from -90deg at 15px 15px,#0000 90deg,#fff 0) 0 0/25px 25px;
+  animation: l7 1s infinite;
+}
+@keyframes l7 {
+  0%   {background-position:50%,0 0}
+  50%  {background-position:50%,25px 0}
+  100% {background-position:50%,25px 25px}
+}
+
+/* Date Input Styling for Dark Theme */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Markdown Styling */
+.prose {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.prose p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose p:first-child {
+  margin-top: 0;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: #fde047; /* yellow-300 */
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose ul, .prose ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose code {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.prose pre {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1em;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.prose a {
+  color: #fde047; /* yellow-300 */
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #facc15; /* yellow-400 */
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #fde047; /* yellow-300 */
+}
+
+.prose h1 {
+  font-size: 2em;
+}
+
+.prose h2 {
+  font-size: 1.5em;
+}
+
+.prose h3 {
+  font-size: 1.25em;
+}
+
+.prose blockquote {
+  border-left: 4px solid #fde047;
+  padding-left: 1em;
+  margin-left: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+/* Cursor Trail Styles - Canvas-based, no CSS needed */
+
+/* Ephesis Font for Signature */
+.font-signature {
+  font-family: 'Ephesis', cursive !important;
+}
+
+/* Name Animation Styles */
+@keyframes nameFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nameGlow {
+  0%, 100% {
+    text-shadow: 0 0 30px rgba(253, 224, 71, 0.5), 0 0 60px rgba(253, 224, 71, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 40px rgba(253, 224, 71, 0.7), 0 0 80px rgba(253, 224, 71, 0.5), 0 0 100px rgba(253, 224, 71, 0.3);
+  }
+}
+
+.animated-name {
+  animation: nameFadeIn 1s ease-out, nameGlow 3s ease-in-out infinite;
+}
+
+/* Enhanced Hover Effects */
+a, button, [role="button"] {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Link hover glow effect */
+a:hover, button:hover, [role="button"]:hover {
+  text-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Navigation links enhanced hover */
+nav a {
+  position: relative;
+  overflow: hidden;
+}
+
+nav a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fde047, #facc15);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(253, 224, 71, 0.6);
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+
+/* Card/container hover effects */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(253, 224, 71, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Button hover effects */
+button, .btn {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after, .btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(253, 224, 71, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:hover::after, .btn:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Image hover effects */
+img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1) drop-shadow(0 0 10px rgba(253, 224, 71, 0.4));
+}
+
+/* Input field hover effects */
+input, textarea, select {
+  transition: all 0.3s ease;
+}
+
+input:hover, textarea:hover, select:hover {
+  box-shadow: 0 0 0 2px rgba(253, 224, 71, 0.3);
+}
+
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 3px rgba(253, 224, 71, 0.4);
+  outline: none;
+}
+
+/* Smooth cursor for interactive elements */
+a, button, input, textarea, select, [role="button"], [tabindex] {
+  cursor: pointer;
+}
+
+/* Disable cursor trail on mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  #cursor-trail {
+    display: none;
+  }
+}
