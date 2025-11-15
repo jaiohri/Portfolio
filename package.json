@@ -1,0 +1,19 @@
+{
+  "name": "personal-website",
+  "version": "1.0.0",
+  "description": "Personal website built with Django and Tailwind CSS",
+  "scripts": {
+    "build-css": "tailwindcss -i ./static/css/input.css -o ./static/css/site.css --minify",
+    "watch-css": "tailwindcss -i ./static/css/input.css -o ./static/css/site.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "tailwind-scrollbar": "^3.0.5",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32"
+  }
+}
+
