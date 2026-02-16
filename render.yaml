@@ -6,7 +6,7 @@ services:
     startCommand: python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:$PORT --workers 3 personalwebsite.wsgi:application
     envVars:
       - key: DEBUG
-        value: False
+        value: "False"
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
@@ -14,6 +14,9 @@ services:
     # Database connection via DATABASE_URL (auto-generated when database is linked)
     databases:
       - name: personalwebsite-db
+        databaseName: personalwebsite
+        user: personalwebsite
+        plan: free
 
 databases:
   - name: personalwebsite-db
