@@ -76,12 +76,12 @@ def contact(request):
         'title': 'Get In Touch',
         'name': 'Jai Ohri',
         'contact_info': {
-            'email': 'jai@example.com',
-            'phone': '+1 (555) 123-4567',
-            'location': 'San Francisco, CA',
-            'linkedin': 'https://linkedin.com/in/jai-ohri',
-            'github': 'https://github.com/jai-ohri',
-            'twitter': 'https://twitter.com/jai_ohri'
+            'email': 'ohri1@ualberta.ca',
+            'phone': '+1 (780) 600-1976',
+            'location': 'Edmonton, AB',
+            'linkedin': 'https://linkedin.com/in/jaiohri',
+            'github': 'https://github.com/jaiohri',
+            'twitter': 'https://twitter.com/jaiohri'
         }
     }
     
