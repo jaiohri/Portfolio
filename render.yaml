@@ -3,10 +3,16 @@ services:
     name: personalwebsite
     env: python
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:$PORT --workers 3 personalwebsite.wsgi:application
+    startCommand: python manage.py migrate --noinput && python manage.py createsuperuser --noinput || true && gunicorn --bind 0.0.0.0:$PORT --workers 3 personalwebsite.wsgi:application
     envVars:
       - key: DEBUG
         value: "False"
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: "admin"
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: "admin@example.com"
+      - key: DJANGO_SUPERUSER_PASSWORD
+        value: "admin"
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
