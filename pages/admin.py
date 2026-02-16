@@ -20,7 +20,7 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('title', 'description', 'image')
         }),
         ('Links', {
-            'fields': ('github_url', 'live_url')
+            'fields': ('github_url',)
         }),
         ('Technologies & Display', {
             'fields': ('technologies', 'featured', 'display_order')
