@@ -19,7 +19,7 @@ class Project(models.Model):
     """Portfolio project"""
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.URLField(max_length=500, blank=True, null=True, help_text="URL to project image")
+    image = models.ImageField(upload_to='projects/', blank=True, null=True, help_text="Project screenshot or banner")
     github_url = models.URLField(max_length=500, blank=True, null=True)
     # live_url field removed
     technologies = models.ManyToManyField(Technology, related_name='projects', blank=True)
