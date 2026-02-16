@@ -21,7 +21,7 @@ class Project(models.Model):
     description = models.TextField()
     image = models.URLField(max_length=500, blank=True, null=True, help_text="URL to project image")
     github_url = models.URLField(max_length=500, blank=True, null=True)
-    live_url = models.URLField(max_length=500, blank=True, null=True)
+    # live_url field removed
     technologies = models.ManyToManyField(Technology, related_name='projects', blank=True)
     featured = models.BooleanField(default=False, help_text="Featured projects appear in the featured section")
     display_order = models.PositiveIntegerField(default=0, help_text="Order for display (lower numbers appear first)")

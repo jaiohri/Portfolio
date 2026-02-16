@@ -22,12 +22,11 @@
                     
                     <!-- Action Buttons -->
                     <div class="flex gap-4">
+                        {% if project.github_url %}
                         <a href="{{ project.github_url }}" class="flex-1 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-300 text-center">
                             <i class="fab fa-github mr-2"></i>GitHub
                         </a>
-                        <a href="{{ project.live_url }}" class="flex-1 bg-yellow-300 text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-200 transition-colors duration-300 text-center font-semibold">
-                            <i class="fas fa-external-link-alt mr-2"></i>Live Demo
-                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -36,7 +35,7 @@
     </div>
 </section>
 
-<!-- Featured Project Section -->
+{% comment %} <!-- Featured Project Section -->
 {% if featured_project %}
 <section class="bg-white/10 backdrop-blur-md my-16 mx-4 rounded-3xl overflow-hidden">
     <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
@@ -66,9 +65,9 @@
         </div>
     </div>
 </section>
-{% endif %}
+{% endif %} {% endcomment %}
 
-<!-- Stats Section -->
+{% comment %} <!-- Stats Section -->
 <section class="py-16 px-4">
     <div class="max-w-4xl mx-auto text-center text-white">
         <h2 class="text-4xl font-light mb-12">Project Statistics</h2>
@@ -87,4 +86,4 @@
             </div>
         </div>
     </div>
-</section>
+</section> {% endcomment %}
