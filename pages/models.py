@@ -41,21 +41,33 @@ class Project(models.Model):
 
 class Skill(models.Model):
     """Skill displayed on about page"""
+    CATEGORY_CHOICES = [
+        ('LANG', 'Languages'),
+        ('FRAME', 'Frameworks'),
+        ('AIML', 'AI/ML'),
+        ('BACK', 'Backend/Databases'),
+        ('CLOUD', 'Cloud/DevOps'),
+        ('TOOL', 'Developer Tools'),
+        ('FUND', 'CS Fundamentals'),
+        ('OTHER', 'Other'),
+    ]
+
     name = models.CharField(max_length=100)
+    category = models.CharField(max_length=5, choices=CATEGORY_CHOICES, default='OTHER')
     icon = models.CharField(max_length=10, help_text="Emoji or icon character")
     level = models.PositiveIntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(100)],
         help_text="Skill level from 0 to 100"
     )
-    display_order = models.PositiveIntegerField(default=0, help_text="Order for display (lower numbers appear first)")
+    display_order = models.PositiveIntegerField(default=0, help_text="Order for display within category")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['display_order', 'name']
+        ordering = ['category', 'display_order', 'name']
     
     def __str__(self):
-        return f"{self.name} ({self.level}%)"
+        return f"{self.name} ({self.get_category_display()})"
 
 
 class Experience(models.Model):

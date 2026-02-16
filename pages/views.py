@@ -25,6 +25,14 @@ def about(request):
     """About page view"""
     # Get skills and experience from database
     skills = Skill.objects.all()
+    
+    # Group skills by category
+    skills_by_category = {}
+    for choice_code, choice_name in Skill.CATEGORY_CHOICES:
+        category_skills = skills.filter(category=choice_code)
+        if category_skills.exists():
+            skills_by_category[choice_name] = category_skills
+            
     experience = Experience.objects.all()
     
     context = {
@@ -32,7 +40,8 @@ def about(request):
         'name': 'Jai Ohri',
         'tagline': 'Developer, Designer, and Problem Solver',
         'about': 'I am passionate about creating innovative solutions and building meaningful digital experiences.',
-        'skills': skills,
+        'skills': skills, # Keep for backward compatibility if needed
+        'skills_by_category': skills_by_category,
         'experience': experience,
     }
     

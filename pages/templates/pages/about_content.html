@@ -1,17 +1,26 @@
 {% load markdown_filter %}
 <!-- Skills Section -->
 <section class="py-16 px-4">
-    <div class="max-w-6xl mx-auto text-center text-white">
-        <h2 class="text-4xl font-light mb-12">Skills & Technologies</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {% for skill in skills %}
-            <div class="bg-white/10 p-6 rounded-xl hover:bg-white/20 transition-colors duration-300 hover:scale-105">
-                <div class="text-4xl mb-3">{{ skill.icon }}</div>
-                <div class="font-semibold text-white mb-2">{{ skill.name }}</div>
-                <div class="w-full bg-gray-700 rounded-full h-2">
-                    <div class="bg-yellow-300 h-2 rounded-full transition-all duration-1000" style="width: {{ skill.level }}%"></div>
+    <div class="max-w-6xl mx-auto text-white">
+        <h2 class="text-4xl font-light mb-12 text-center">Skills & Technologies</h2>
+        
+        <div class="space-y-12">
+            {% for category, skills_in_category in skills_by_category.items %}
+            <div class="bg-white/5 p-8 rounded-2xl backdrop-blur-sm">
+                <h3 class="text-2xl font-semibold mb-6 text-yellow-300 border-b border-white/10 pb-2">{{ category }}</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    {% for skill in skills_in_category %}
+                    <div class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg group relative">
+                        <div class="text-3xl mb-2 text-center">{{ skill.icon }}</div>
+                        <div class="font-medium text-white text-center text-sm md:text-base">{{ skill.name }}</div>
+                        
+                        <!-- Tooltip for level -->
+                        <div class="absolute inset-0 bg-black/80 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                            <span class="text-yellow-300 font-bold">{{ skill.level }}%</span>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                <div class="text-sm text-gray-300 mt-1">{{ skill.level }}%</div>
             </div>
             {% endfor %}
         </div>
