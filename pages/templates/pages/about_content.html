@@ -4,24 +4,33 @@
     <div class="max-w-6xl mx-auto text-white">
         <h2 class="text-4xl font-light mb-12 text-center">Skills & Technologies</h2>
         
-        <div class="space-y-12">
+        <div class="space-y-6">
             {% for category, skills_in_category in skills_by_category.items %}
-            <div class="bg-white/5 p-8 rounded-2xl backdrop-blur-sm">
-                <h3 class="text-2xl font-semibold mb-6 text-yellow-300 border-b border-white/10 pb-2">{{ category }}</h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <details class="group bg-white/5 rounded-2xl backdrop-blur-sm overflow-hidden border border-white/10 open:bg-white/10 transition-all duration-300" open>
+                <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none hover:bg-white/5 transition-colors">
+                    <h3 class="text-2xl font-semibold text-yellow-300 flex items-center gap-3">
+                        {{ category }}
+                        <span class="text-sm font-normal text-gray-400 bg-white/10 px-2 py-0.5 rounded-full">{{ skills_in_category|length }}</span>
+                    </h3>
+                    <span class="text-yellow-300 transform group-open:rotate-180 transition-transform duration-300 text-xl">
+                        <i class="fas fa-chevron-down"></i>
+                    </span>
+                </summary>
+                
+                <div class="p-6 pt-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 animate-fadeIn">
                     {% for skill in skills_in_category %}
-                    <div class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg group relative">
+                    <div class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg group/skill relative">
                         <div class="text-3xl mb-2 text-center">{{ skill.icon }}</div>
                         <div class="font-medium text-white text-center text-sm md:text-base">{{ skill.name }}</div>
                         
                         <!-- Tooltip for level -->
-                        <div class="absolute inset-0 bg-black/80 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                        <div class="absolute inset-0 bg-black/80 rounded-xl opacity-0 group-hover/skill:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                             <span class="text-yellow-300 font-bold">{{ skill.level }}%</span>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-            </div>
+            </details>
             {% endfor %}
         </div>
     </div>
