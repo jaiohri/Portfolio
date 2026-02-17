@@ -1,40 +1,27 @@
 {% load markdown_filter %}
-<!-- Skills Section -->
+<!-- Personal Story Section -->
 <section class="py-16 px-4">
-    <div class="max-w-6xl mx-auto text-white">
-        <h2 class="text-4xl font-light mb-12 text-center">Skills & Technologies</h2>
-        
-        <div class="space-y-6">
-            {% for category, skills_in_category in skills_by_category.items %}
-            <details class="group bg-white/5 rounded-2xl backdrop-blur-sm overflow-hidden border border-white/10 open:bg-white/10 transition-all duration-300" open>
-                <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none hover:bg-white/5 transition-colors">
-                    <h3 class="text-2xl font-semibold text-yellow-300 flex items-center gap-3">
-                        {{ category }}
-                        <span class="text-sm font-normal text-gray-400 bg-white/10 px-2 py-0.5 rounded-full">{{ skills_in_category|length }}</span>
-                    </h3>
-                    <span class="text-yellow-300 transform group-open:rotate-180 transition-transform duration-300 text-xl">
-                        <i class="fas fa-chevron-down"></i>
-                    </span>
-                </summary>
-                
-                <div class="p-6 pt-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 animate-fadeIn">
-                    {% for skill in skills_in_category %}
-                    <div class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg group/skill relative">
-                        <div class="text-3xl mb-2 text-center">{{ skill.icon }}</div>
-                        <div class="font-medium text-white text-center text-sm md:text-base">{{ skill.name }}</div>
-                        
-                        <!-- Tooltip for level -->
-                        <div class="absolute inset-0 bg-black/80 rounded-xl opacity-0 group-hover/skill:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                            <span class="text-yellow-300 font-bold">{{ skill.level }}%</span>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </details>
-            {% endfor %}
+    <div class="max-w-4xl mx-auto text-center text-white">
+        <h2 class="text-4xl font-light mb-12">Building Intelligent Systems</h2>
+        <div class="bg-white/10 p-8 rounded-2xl text-left">
+            <p class="text-lg mb-6 opacity-90">
+                I’m a software engineer focused on building intelligent systems that bridge AI research and real-world products. 
+                My work spans early-stage startups and applied research, where I design and ship production features under fast-paced,
+                high-ownership environments.
+            </p>
+            <p class="text-lg mb-6 opacity-90">
+                I’m drawn to problems that require both engineering rigor and product thinking — from multi-agent AI systems and
+                automation pipelines to full-stack platforms that scale with real users. I care deeply about clean architecture,
+                iteration speed, and building software that actually gets used.
+            </p>
+            <p class="text-lg opacity-90">
+                Outside of work, I’m constantly exploring new technologies, experimenting with ideas, and refining my craft as a builder.
+                I see engineering as an ongoing process of learning, shipping, and improving.
+            </p>
         </div>
     </div>
 </section>
+
 
 <!-- Experience Section -->
 <section class="bg-white/10 backdrop-blur-md my-16 mx-4 rounded-3xl overflow-hidden">
@@ -64,25 +51,52 @@
     </div>
 </section>
 
-<!-- Personal Story Section -->
+<style>
+    details[open] .icon-closed { display: none; }
+    details:not([open]) .icon-open { display: none; }
+</style>
+<!-- Skills Section -->
 <section class="py-16 px-4">
-    <div class="max-w-4xl mx-auto text-center text-white">
-        <h2 class="text-4xl font-light mb-12">My Story</h2>
-        <div class="bg-white/10 p-8 rounded-2xl text-left">
-            <p class="text-lg mb-6 opacity-90">
-                I started my journey in web development with a curiosity about how websites work. 
-                What began as simple HTML pages has evolved into a passion for creating complex, 
-                user-friendly applications that solve real-world problems.
-            </p>
-            <p class="text-lg mb-6 opacity-90">
-                Over the years, I've had the opportunity to work with various technologies and 
-                frameworks, always focusing on writing clean, maintainable code and creating 
-                exceptional user experiences.
-            </p>
-            <p class="text-lg opacity-90">
-                When I'm not coding, you can find me exploring new technologies, contributing to 
-                open-source projects, or sharing knowledge with the developer community.
-            </p>
+    <div class="max-w-6xl mx-auto text-white">
+        <h2 class="text-4xl font-light mb-12 text-center">Skills & Technologies</h2>
+        
+        <div class="space-y-6">
+            {% for category, skills_in_category in skills_by_category.items %}
+            <details class="group bg-white/5 rounded-2xl backdrop-blur-sm overflow-hidden border border-white/10 open:bg-white/10 transition-all duration-300" {% if category == 'Languages' %}open{% endif %}>
+                <summary class="flex items-center justify-between w-full p-6 cursor-pointer list-none select-none hover:bg-white/5 transition-colors [&::-webkit-details-marker]:hidden">
+                    <h3 class="text-2xl font-semibold text-yellow-300 flex items-center gap-3">
+                        {{ category }}
+                        <span class="text-sm font-normal text-gray-400 bg-white/10 px-2 py-0.5 rounded-full">{{ skills_in_category|length }}</span>
+                    </h3>
+                    <span class="text-yellow-300">
+                        <!-- Down Chevron (Show when closed) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 icon-closed">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                        <!-- Up Chevron (Show when open) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 icon-open">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                        </svg>
+                    </span>
+                </summary>
+                
+                <div class="p-6 pt-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 animate-fadeIn">
+                    {% for skill in skills_in_category %}
+                    <div class="bg-white/10 p-4 rounded-xl hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg group/skill relative">
+                        <div class="text-3xl mb-2 text-center">{{ skill.icon }}</div>
+                        <div class="font-medium text-white text-center text-sm md:text-base">{{ skill.name }}</div>
+                        
+                        <!-- Tooltip for level -->
+                        <div class="absolute inset-0 bg-black/80 rounded-xl opacity-0 group-hover/skill:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                            <span class="text-yellow-300 font-bold">{{ skill.level }}%</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </details>
+            {% endfor %}
         </div>
     </div>
 </section>
+
+

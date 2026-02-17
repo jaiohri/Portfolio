@@ -16,8 +16,8 @@ def home(request):
     context = {
         'title': 'Welcome to My Personal Website',
         'name': 'Jai Ohri',
-        'tagline': 'Developer, Designer, and Problem Solver',
-        'about': 'I am passionate about creating innovative solutions and building meaningful digital experiences.',
+        'tagline': 'AI Engineer building real-world production systems',
+        'about': 'I am passionate about building intelligent systems that bridge AI research and real-world products.',
     }
     return render(request, 'pages/home.html', context)
 
@@ -38,8 +38,8 @@ def about(request):
     context = {
         'title': 'About Me',
         'name': 'Jai Ohri',
-        'tagline': 'Developer, Designer, and Problem Solver',
-        'about': 'I am passionate about creating innovative solutions and building meaningful digital experiences.',
+        'tagline': 'AI Engineer building real-world production systems',
+        'about': 'Focused on building scalable AI systems and real production software.',
         'skills': skills, # Keep for backward compatibility if needed
         'skills_by_category': skills_by_category,
         'experience': experience,

@@ -39,7 +39,7 @@
                 <ul class="hidden md:flex space-x-8 items-center">
                     <li><a href="{% url 'pages:home' %}" class="text-white hover:text-yellow-300 transition-colors duration-300">Home</a></li>
                     <li><a href="{% url 'pages:about' %}" class="text-white hover:text-yellow-300 transition-colors duration-300">About</a></li>
-                    <li><a href="{% url 'pages:portfolio' %}" class="text-white hover:text-yellow-300 transition-colors duration-300">Portfolio</a></li>
+                    <li><a href="{% url 'pages:portfolio' %}" class="text-white hover:text-yellow-300 transition-colors duration-300">Projects</a></li>
                     {% if user.is_authenticated and user.username != 'guest' and user.is_staff %}
                     <li><a href="{% url 'pages:experiences' %}" class="text-white hover:text-yellow-300 transition-colors duration-300">Edit Experiences</a></li>
                     {% endif %}
@@ -79,7 +79,7 @@
                 <ul class="flex flex-col space-y-4">
                     <li><a href="{% url 'pages:home' %}" class="block text-white hover:text-yellow-300 transition-colors duration-300 py-2" @click="mobileMenuOpen = false">Home</a></li>
                     <li><a href="{% url 'pages:about' %}" class="block text-white hover:text-yellow-300 transition-colors duration-300 py-2" @click="mobileMenuOpen = false">About</a></li>
-                    <li><a href="{% url 'pages:portfolio' %}" class="block text-white hover:text-yellow-300 transition-colors duration-300 py-2" @click="mobileMenuOpen = false">Portfolio</a></li>
+                    <li><a href="{% url 'pages:portfolio' %}" class="block text-white hover:text-yellow-300 transition-colors duration-300 py-2" @click="mobileMenuOpen = false">Projects</a></li>
                     {% if user.is_authenticated and user.username != 'guest' and user.is_staff %}
                     <li><a href="{% url 'pages:experiences' %}" class="block text-white hover:text-yellow-300 transition-colors duration-300 py-2" @click="mobileMenuOpen = false">Edit Experiences</a></li>
                     {% endif %}
